@@ -1,0 +1,111 @@
+.App {
+    text-align: center;
+    min-width: 260px;
+}
+
+.App-bomb {
+    animation: App-logo-spin infinite 1s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 2.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+.Badge {
+    height: 150px;
+    padding: 10px;
+}
+
+.ProbAll {
+    height: 205px;
+}
+
+.ProbNum {
+    font-size: 60px;
+    margin: 5px;
+}
+
+.ProbSymb {
+    font-size: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+}
+
+.ProbSpace {
+    margin-top: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.ScoreBoard {
+    margin-top: 10%;
+    font-size: 60px;
+    color: green;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 8px;
+}
+
+.ProbNotification {
+    font-size: 30px;
+    color: green;
+    padding: 20px;
+}
+
+.KeyBoard {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 10%;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.KeyBoardKey {
+    width: 60px;
+    height: 60px;
+    background-color: #222;
+    font-size: 25px;
+    color: white;
+    margin: 5px;
+}
+
+.ClearButton {
+    margin-top: 15px;
+    height: 75px;
+    width: 125px;
+    background-color: #222;
+    font-size: 25px;
+    color: white;
+}
+
+.keyBoardBreak {
+    margin-top: 100px;
+    margin-bottom: 10px;
+    border-top: 2px solid #222;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
