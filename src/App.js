@@ -1,8 +1,13 @@
 import React, { Component } from "react"
 import bomb from "./bomb.png"
-import badge1 from "./badge1.png"
-import badge2 from "./badge2.png"
-import badge3 from "./badge3.png"
+import armsup from "./comp_armsup.png"
+import baby from "./comp_baby.png"
+import barbell from "./comp_barbell.png"
+import caveman from "./comp_caveman.png"
+import cena from "./comp_cena.png"
+import hulk from "./comp_hulk.png"
+import thumbsup from "./comp_thumbsup.png"
+import blank from "./comp_blank.png"
 import "./App.css"
 
 class Problem {
@@ -118,13 +123,65 @@ class App extends Component {
         }))
     }
 
+    getBadge = () => {
+        let level = 0
+        for (
+            let index = this.state.history.length - 1;
+            index < this.state.history.length;
+            index--
+        ) {
+            // for (let index = 0; index < this.props.history.length; index++) {
+
+            const element = this.state.history[index]
+            if (element && element.correct) {
+                level++
+            } else {
+                break
+            }
+        }
+        console.log("L = " + level)
+        if (level >= 20) {
+            return <img src={hulk} className="Badge" alt="Correct" />
+        } else if (level > 15) {
+            return <img src={cena} className="Badge" alt="Correct" />
+        } else if (level > 12) {
+            return <img src={caveman} className="Badge" alt="Correct" />
+        } else if (level > 9) {
+            return <img src={thumbsup} className="Badge" alt="Correct" />
+        } else if (level > 6) {
+            return <img src={armsup} className="Badge" alt="Correct" />
+        } else if (level > 3) {
+            return <img src={barbell} className="Badge" alt="Correct" />
+        } else if (level > 0) {
+            return <img src={baby} className="Badge" alt="Correct" />
+        } else {
+            return <img src={blank} className="Badge" alt="Correct" />
+        }
+    }
+
     render() {
         return (
             <div className="App">
-                <header className="App-header">
+                <div className="TitleBar">
                     <img src={bomb} className="App-bomb" alt="bomb" />
-                    <h1 className="App-title">Math Bomb</h1>
-                </header>
+                    <div className="App-title">Math Bomb</div>
+                    <img src={bomb} className="App-bomb" alt="bomb" />
+                </div>
+                <div className="AppBar">
+                    {/* <div className="aaa" />
+                    <div className="bbb" />
+                    <div className="aaa" /> */}
+                    <div className="ProbNotification">{this.getBadge()}</div>
+                    {/* <img src={bomb} className="App-bomb" alt="bomb" /> */}
+                    {/* <header className="App-header"> */}
+                    {/* <h1 className="App-title">Math Bomb</h1> */}
+                    {/* </header> */}
+                    {/* <div className="ProbNotification">{this.getBadge()}</div> */}
+                </div>
+                <div className="ScoreBar">
+                    Bombs Remaining: {this.state.probSet.length}
+                </div>
+
                 <Game
                     probs={this.state.probSet}
                     answerTimer={this.answerTimer}
@@ -138,19 +195,21 @@ class App extends Component {
                     history={this.state.history}
                 />
 
-                <hr className="keyBoardBreak" />
-                <KeyBoard
-                    keys={this.state.keys}
-                    updateAnswer={this.updateAnswer}
-                />
-                <button
-                    className="ClearButton"
-                    onClick={() => {
-                        this.clearAnswer()
-                    }}
-                >
-                    Clear
-                </button>
+                <div className="keyBoardContainer">
+                    {/* <hr className="keyBoardBreak" /> */}
+                    <KeyBoard
+                        keys={this.state.keys}
+                        updateAnswer={this.updateAnswer}
+                    />
+                    <button
+                        className="ClearButton"
+                        onClick={() => {
+                            this.clearAnswer()
+                        }}
+                    >
+                        Clear
+                    </button>
+                </div>
             </div>
         )
     }
@@ -166,31 +225,31 @@ class Game extends React.Component {
     //TODO Don't disappear image on double digit answer
     //PUT IN TIMER
 
-    getBadge = () => {
-        let level = 0
-        for (
-            let index = this.props.history.length - 1;
-            index < this.props.history.length;
-            index--
-        ) {
-            // for (let index = 0; index < this.props.history.length; index++) {
+    // getBadge = () => {
+    //     let level = 0
+    //     for (
+    //         let index = this.props.history.length - 1;
+    //         index < this.props.history.length;
+    //         index--
+    //     ) {
+    //         // for (let index = 0; index < this.props.history.length; index++) {
 
-            const element = this.props.history[index]
-            if (element && element.correct) {
-                level++
-            } else {
-                break
-            }
-        }
-        console.log("L = " + level)
-        if (level >= 3) {
-            return <img src={badge3} className="Badge" alt="Correct" />
-        } else if (level > 0) {
-            return <img src={badge1} className="Badge" alt="Correct" />
-        } else {
-            return null
-        }
-    }
+    //         const element = this.props.history[index]
+    //         if (element && element.correct) {
+    //             level++
+    //         } else {
+    //             break
+    //         }
+    //     }
+    //     console.log("L = " + level)
+    //     if (level >= 3) {
+    //         return <img src={badge3} className="Badge" alt="Correct" />
+    //     } else if (level > 0) {
+    //         return <img src={badge1} className="Badge" alt="Correct" />
+    //     } else {
+    //         return null
+    //     }
+    // }
 
     render() {
         console.log("RENDER GAME")
@@ -217,11 +276,7 @@ class Game extends React.Component {
                         </div>
                     </div>
                 ) : null}
-                <div className="ScoreBoard">{this.props.probs.length}</div>
-                <div className="ProbNotification">
-                    {this.getBadge()}
-                    {/* {this.props.notification ? this.getBadge() : null} */}
-                </div>
+                {/* <div className="ScoreBoard">{this.props.probs.length}</div> */}
             </div>
         )
     }
