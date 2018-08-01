@@ -1,14 +1,17 @@
 {
-  "main.css": "static/css/main.41ebf8c3.css",
-  "main.css.map": "static/css/main.41ebf8c3.css.map",
-  "main.js": "static/js/main.e02f8077.js",
-  "main.js.map": "static/js/main.e02f8077.js.map",
+  "main.css": "static/css/main.957f8cdf.css",
+  "main.css.map": "static/css/main.957f8cdf.css.map",
+  "main.js": "static/js/main.d1f08024.js",
+  "main.js.map": "static/js/main.d1f08024.js.map",
   "static/media/bomb.png": "static/media/bomb.73648e2c.png",
   "static/media/comp_armsup.png": "static/media/comp_armsup.f538e3f4.png",
   "static/media/comp_baby.png": "static/media/comp_baby.d14108e0.png",
   "static/media/comp_barbell.png": "static/media/comp_barbell.62cec9a5.png",
   "static/media/comp_caveman.png": "static/media/comp_caveman.132202bc.png",
   "static/media/comp_cena.png": "static/media/comp_cena.a151621e.png",
+  "static/media/comp_deadlift.png": "static/media/comp_deadlift.0886f819.png",
+  "static/media/comp_geek.png": "static/media/comp_geek.b1190e3d.png",
   "static/media/comp_hulk.png": "static/media/comp_hulk.9879aac3.png",
+  "static/media/comp_oldguy.png": "static/media/comp_oldguy.6786c669.png",
   "static/media/comp_thumbsup.png": "static/media/comp_thumbsup.48752196.png"
 }
