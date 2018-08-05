@@ -8,6 +8,11 @@ import cena from "./comp_cena.png"
 import hulk from "./comp_hulk.png"
 import thumbsup from "./comp_thumbsup.png"
 import blank from "./comp_blank.png"
+import oldguy from "./comp_oldguy.png"
+import deadlift from "./comp_deadlift.png"
+import geek from "./comp_geek.png"
+import barbellsilver from "./barbell_silver.png"
+import dumbellsilver from "./dumbell_silver.png"
 import "./App.css"
 
 class Problem {
@@ -140,22 +145,26 @@ class App extends Component {
             }
         }
         console.log("L = " + level)
-        if (level >= 20) {
+        if (level >= 40) {
             return <img src={hulk} className="Badge" alt="Correct" />
-        } else if (level > 15) {
+        } else if (level > 35) {
             return <img src={cena} className="Badge" alt="Correct" />
-        } else if (level > 12) {
+        } else if (level > 30) {
+            return <img src={deadlift} className="Badge" alt="Correct" />
+        } else if (level > 25) {
             return <img src={caveman} className="Badge" alt="Correct" />
-        } else if (level > 9) {
+        } else if (level > 20) {
             return <img src={thumbsup} className="Badge" alt="Correct" />
-        } else if (level > 6) {
+        } else if (level > 15) {
             return <img src={armsup} className="Badge" alt="Correct" />
-        } else if (level > 3) {
+        } else if (level > 10) {
             return <img src={barbell} className="Badge" alt="Correct" />
-        } else if (level > 0) {
-            return <img src={baby} className="Badge" alt="Correct" />
+        } else if (level > 5) {
+            return <img src={geek} className="Badge" alt="Correct" />
+        } else if (level > 2) {
+            return <img src={oldguy} className="Badge" alt="Correct" />
         } else {
-            return <img src={blank} className="Badge" alt="Correct" />
+            return <img src={baby} className="Badge" alt="Correct" />
         }
     }
 
@@ -163,9 +172,9 @@ class App extends Component {
         return (
             <div className="App">
                 <div className="TitleBar">
-                    <img src={bomb} className="App-bomb" alt="bomb" />
-                    <div className="App-title">Math Bomb</div>
-                    <img src={bomb} className="App-bomb" alt="bomb" />
+                    <img src={dumbellsilver} className="App-barb" alt="bomb" />
+                    <div className="App-title">Math Gym</div>
+                    <img src={dumbellsilver} className="App-barb" alt="bomb" />
                 </div>
                 <div className="AppBar">
                     {/* <div className="aaa" />
@@ -179,7 +188,7 @@ class App extends Component {
                     {/* <div className="ProbNotification">{this.getBadge()}</div> */}
                 </div>
                 <div className="ScoreBar">
-                    Bombs Remaining: {this.state.probSet.length}
+                    Reps Remaining: {this.state.probSet.length}
                 </div>
 
                 <Game
