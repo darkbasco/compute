@@ -1,5 +1,4 @@
 import React, { Component } from "react"
-import bomb from "./bomb.png"
 import armsup from "./comp_armsup.png"
 import baby from "./comp_baby.png"
 import barbell from "./comp_barbell.png"
@@ -7,11 +6,9 @@ import caveman from "./comp_caveman.png"
 import cena from "./comp_cena.png"
 import hulk from "./comp_hulk.png"
 import thumbsup from "./comp_thumbsup.png"
-import blank from "./comp_blank.png"
 import oldguy from "./comp_oldguy.png"
 import deadlift from "./comp_deadlift.png"
 import geek from "./comp_geek.png"
-import barbellsilver from "./barbell_silver.png"
 import dumbellsilver from "./dumbell_silver.png"
 import "./App.css"
 
@@ -111,10 +108,10 @@ class App extends Component {
     }
 
     checkAnswer = (problem, answer) => {
+        console.log("CHECK", problem, answer)
         if (problem.curr_a + problem.curr_b === answer) {
             this.removeCurrentProblem()
             this.shuffleCurrentProblem(true)
-            //this.updateCurrentProblem()
             return true
         } else {
             return false
@@ -135,8 +132,6 @@ class App extends Component {
             index < this.state.history.length;
             index--
         ) {
-            // for (let index = 0; index < this.props.history.length; index++) {
-
             const element = this.state.history[index]
             if (element && element.correct) {
                 level++
@@ -144,7 +139,7 @@ class App extends Component {
                 break
             }
         }
-        console.log("L = " + level)
+
         if (level >= 40) {
             return <img src={hulk} className="Badge" alt="Correct" />
         } else if (level > 35) {
@@ -177,15 +172,7 @@ class App extends Component {
                     <img src={dumbellsilver} className="App-barb" alt="bomb" />
                 </div>
                 <div className="AppBar">
-                    {/* <div className="aaa" />
-                    <div className="bbb" />
-                    <div className="aaa" /> */}
                     <div className="ProbNotification">{this.getBadge()}</div>
-                    {/* <img src={bomb} className="App-bomb" alt="bomb" /> */}
-                    {/* <header className="App-header"> */}
-                    {/* <h1 className="App-title">Math Bomb</h1> */}
-                    {/* </header> */}
-                    {/* <div className="ProbNotification">{this.getBadge()}</div> */}
                 </div>
                 <div className="ScoreBar">
                     Reps Remaining: {this.state.probSet.length}
@@ -196,7 +183,6 @@ class App extends Component {
                     answerTimer={this.answerTimer}
                     currentProblem={this.state.currentProblem}
                     currentAnswer={this.state.currentAnswer}
-                    //updateCurrentProblem={this.updateCurrentProblem}
                     removeCurrentProblem={this.removeCurrentProblem}
                     shuffleCurrentProblem={this.shuffleCurrentProblem}
                     notification={this.state.notification}
@@ -205,7 +191,6 @@ class App extends Component {
                 />
 
                 <div className="keyBoardContainer">
-                    {/* <hr className="keyBoardBreak" /> */}
                     <KeyBoard
                         keys={this.state.keys}
                         updateAnswer={this.updateAnswer}
@@ -227,41 +212,12 @@ class App extends Component {
 class Game extends React.Component {
     constructor(props) {
         super(props)
-        console.log("CONSTRUCT GAME")
         this.props.shuffleCurrentProblem(false)
     }
 
-    //TODO Don't disappear image on double digit answer
-    //PUT IN TIMER
-
-    // getBadge = () => {
-    //     let level = 0
-    //     for (
-    //         let index = this.props.history.length - 1;
-    //         index < this.props.history.length;
-    //         index--
-    //     ) {
-    //         // for (let index = 0; index < this.props.history.length; index++) {
-
-    //         const element = this.props.history[index]
-    //         if (element && element.correct) {
-    //             level++
-    //         } else {
-    //             break
-    //         }
-    //     }
-    //     console.log("L = " + level)
-    //     if (level >= 3) {
-    //         return <img src={badge3} className="Badge" alt="Correct" />
-    //     } else if (level > 0) {
-    //         return <img src={badge1} className="Badge" alt="Correct" />
-    //     } else {
-    //         return null
-    //     }
-    // }
-
     render() {
         console.log("RENDER GAME")
+        console.log("RENDER", this.props.currentProblem, this.props.currentAnswer)
         return (
             <div className="ProbAll">
                 {this.props.currentProblem !== null ? (
@@ -285,7 +241,6 @@ class Game extends React.Component {
                         </div>
                     </div>
                 ) : null}
-                {/* <div className="ScoreBoard">{this.props.probs.length}</div> */}
             </div>
         )
     }
