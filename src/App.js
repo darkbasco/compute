@@ -28,13 +28,7 @@ class App extends Component {
         const second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
         this.state = {
-            probSet: first.reduce((acc_a, curr_a) => {
-                return acc_a.concat(
-                    second.reduce((acc_b, curr_b) => {
-                        return acc_b.concat({ curr_a, curr_b })
-                    }, [])
-                )
-            }, []),
+            probSet: this.generateProblemSet(first, second, ["+", "-"]),
             keys: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             currentProblem: null,
             currentAnswer: null,
@@ -43,6 +37,25 @@ class App extends Component {
             history: []
         }
     }
+
+
+    generateProblemSet = (first, second, third) => 
+        first.reduce((acc_a, curr_a) => {
+            return acc_a.concat(
+                second.reduce((acc_b, curr_b) => {
+                    return acc_b.concat(
+                        third.reduce((acc_c, curr_c) => {
+                            if(curr_c === "+"){
+                                return acc_c.concat({ curr_a, curr_b, curr_c })
+                            } else if (curr_c === "-") {
+                                if(curr_b <= curr_a) return acc_c.concat({ curr_a, curr_b, curr_c })
+                            }
+                    },[])
+                )
+                }, [])
+            )
+        }, [])
+    
 
     getInitialAnswer = () => "?"
 
@@ -109,10 +122,22 @@ class App extends Component {
 
     checkAnswer = (problem, answer) => {
         console.log("CHECK", problem, answer)
-        if (problem.curr_a + problem.curr_b === answer) {
+        if (problem.curr_c === "+" && problem.curr_a + problem.curr_b === answer) {
             this.removeCurrentProblem()
             this.shuffleCurrentProblem(true)
             return true
+        } else if (problem.curr_c === "-" && problem.curr_a - problem.curr_b === answer) {
+            this.removeCurrentProblem()
+            this.shuffleCurrentProblem(true)
+            return true
+        // } else if (problem.curr_c === "x" && problem.curr_a + problem.curr_b === answer) {
+        //     this.removeCurrentProblem()
+        //     this.shuffleCurrentProblem(true)
+        //     return true
+        // } else if (problem.curr_c === "/" && problem.curr_a + problem.curr_b === answer) {
+        //     this.removeCurrentProblem()
+        //     this.shuffleCurrentProblem(true)
+        //     return true
         } else {
             return false
         }
@@ -183,6 +208,7 @@ class App extends Component {
                     answerTimer={this.answerTimer}
                     currentProblem={this.state.currentProblem}
                     currentAnswer={this.state.currentAnswer}
+                    currentOperator={this.state.currentOperator}
                     removeCurrentProblem={this.removeCurrentProblem}
                     shuffleCurrentProblem={this.shuffleCurrentProblem}
                     notification={this.state.notification}
@@ -227,7 +253,7 @@ class Game extends React.Component {
                                 ? this.props.currentProblem.curr_a
                                 : 0}
                         </div>
-                        <div className="ProbSymb">+</div>
+                        <div className="ProbSymb">{this.props.currentProblem.curr_c}</div>
                         <div className="ProbNum">
                             {this.props.currentProblem !== null
                                 ? this.props.currentProblem.curr_b

@@ -86,9 +86,9 @@
 
 .ProbSymb {
     font-size: 60px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 8px;
+    /* margin-left: 5px;
+    margin-right: 5px; */
+    margin-bottom: 4px;
 }
 
 .ProbSpace {
