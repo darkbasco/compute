@@ -72,6 +72,13 @@
     padding: 10px;
 }
 
+.TheEnd {
+    font-size: 40px;
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+}
+
 .ProbAll {
     /* padding: 10px;
     display: flex;
@@ -85,10 +92,18 @@
 }
 
 .ProbSymb {
-    font-size: 60px;
+    height: 35px;
     /* margin-left: 5px;
     margin-right: 5px; */
     margin-bottom: 4px;
+}
+
+.ProbMult {
+    height: 30px;
+    margin-left: 1px;
+    /* 
+    margin-right: 5px; */
+    margin-top: 3px;
 }
 
 .ProbSpace {
