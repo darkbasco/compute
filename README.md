@@ -1,5 +1,13 @@
+## FEATURE REQUESTS
+Ability to use a hard keyboard.
+Work on small mobile devices.
+Hamburger settings menu to control time between problems, min number, max number and included operations.
+Change "Clear" button to backspace.
+Report (which problems missed most).
+Show answer for missed problems for a second.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-YoYo!
 
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).

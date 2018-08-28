@@ -73,10 +73,27 @@
 }
 
 .TheEnd {
-    font-size: 40px;
     text-align: center;
     flex-direction: column;
     display: flex;
+}
+
+.RestartButtonDiv {
+    padding: 20px;
+}
+
+.RestartButton {
+    height: 50px;
+    width: 100px;
+    touch-action: manipulation;
+    background-color: #222;
+    font-size: 25px;
+    color: white;
+}
+
+.CongratsText {
+    padding-top: 50px;
+    font-size: 40px;
 }
 
 .ProbAll {
@@ -147,6 +164,7 @@
     font-size: 25px;
     color: white;
     margin: 5px;
+    touch-action: manipulation;
 }
 
 .ClearButton {
@@ -156,12 +174,17 @@
     background-color: #222;
     font-size: 25px;
     color: white;
+    touch-action: manipulation;
 }
 
 .keyBoardBreak {
     /* margin-top: 100px;
     margin-bottom: 10px; */
     border-top: 2px solid #222;
+}
+
+.Version {
+    margin-bottom: 0px;
 }
 
 @keyframes App-logo-spin {

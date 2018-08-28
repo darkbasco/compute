@@ -9,7 +9,6 @@ import thumbsup from "./comp_thumbsup.png"
 import oldguy from "./comp_oldguy.png"
 import deadlift from "./comp_deadlift.png"
 import geek from "./comp_geek.png"
-import rock from "./comp_rock2.png"
 import dumbellsilver from "./dumbell_silver.png"
 import plus from "./sign_plus.png"
 import minus from "./sign_minus.png"
@@ -17,14 +16,6 @@ import mult from "./sign_mult.png"
 import divi from "./sign_divi.png"
 import equal from "./sign_equal.png"
 import "./App.css"
-const pjson = require("../package.json")
-
-// const first = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-// const second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-let first = [0, 1, 2, 3, 4, 5, 6, 7]
-let second = [0, 1, 2, 3, 4, 5, 6, 7]
-let operations = ["plus", "minus", "mult", "divi"]
-let waitTime = 7000
 
 class Problem {
     constructor(problem, answer, correct) {
@@ -43,8 +34,18 @@ class App extends Component {
     }
 
     initGame = () => {
+        const first = [0, 1]
+        const second = [0, 1]
+        // const first = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        // const second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+
         return {
-            probSet: this.generateProblemSet(first, second, operations),
+            probSet: this.generateProblemSet(first, second, [
+                "plus",
+                "minus",
+                "mult",
+                "divi"
+            ]),
             keys: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
             currentProblem: null,
             currentAnswer: null,
@@ -100,58 +101,40 @@ class App extends Component {
     getInitialAnswer = () => "?"
 
     shuffleCurrentProblem = answeredPrevious => {
-        this.setState(prevState => {
-            const probIndex = Math.floor(
-                Math.random() * prevState.probSet.length
-            )
-            console.log(
-                "shuffleCurrentProblem",
-                probIndex,
-                this.state.probSet.length,
-                prevState.probSet.length,
-                answeredPrevious
-            )
+        const probIndex = Math.floor(Math.random() * this.state.probSet.length)
+        console.log("shuffleCurrentProblem", probIndex, answeredPrevious)
 
-            return {
-                currentProblem: prevState.probSet[probIndex],
-                currentAnswer: null,
-                currentIndex: probIndex,
-                history: [
-                    ...prevState.history,
-                    new Problem(
-                        prevState.currentProblem,
-                        prevState.currentAnswer,
-                        answeredPrevious
-                    )
-                ]
-                // history:
-                //     prevState.currentProblem !== null
-                //         ? [
-                //               ...prevState.history,
-                //               new Problem(
-                //                   prevState.currentProblem,
-                //                   prevState.currentAnswer,
-                //                   answeredPrevious
-                //               )
-                //           ]
-                //         : [...prevState.history]
-            }
-        })
+        this.setState(prevState => ({
+            currentProblem: prevState.probSet[probIndex]
+                ? prevState.probSet[probIndex]
+                : null,
+            currentAnswer: null,
+            currentIndex: probIndex,
+            history:
+                prevState.currentProblem !== null
+                    ? [
+                          ...prevState.history,
+                          new Problem(
+                              prevState.currentProblem,
+                              prevState.currentAnswer,
+                              answeredPrevious
+                          )
+                      ]
+                    : [...prevState.history]
+        }))
     }
 
     removeCurrentProblem = () => {
-        this.setState(prevState => {
-            // let filteredArray
-            // if (prevState.currentIndex) {
-            const filteredArray = prevState.probSet.filter(
-                item => item !== prevState.currentProblem
-            )
-            // }
+        let filteredArray
+        if (this.state.currentIndex) {
+            filteredArray = this.state.probSet.filter(item => {
+                return item !== this.state.currentProblem
+            })
+        }
 
-            return {
-                probSet: filteredArray ? filteredArray : prevState.probSet
-            }
-        })
+        this.setState(prevState => ({
+            probSet: filteredArray ? filteredArray : prevState.probSet
+        }))
     }
 
     answerTimer = prob => {
@@ -161,21 +144,15 @@ class App extends Component {
                 console.log("TIMES UP")
                 this.shuffleCurrentProblem(false)
             }
-        }, waitTime)
+        }, 7000)
     }
 
     updateAnswer = answer => {
-        this.setState(prevState => {
-            const newAnswer = this.buildAnswer(prevState.currentAnswer, answer)
-
-            return {
-                currentAnswer: newAnswer,
-                notification: this.checkAnswer(
-                    prevState.currentProblem,
-                    newAnswer
-                )
-            }
-        })
+        const newAnswer = this.buildAnswer(this.state.currentAnswer, answer)
+        this.setState(prevState => ({
+            currentAnswer: newAnswer,
+            notification: this.checkAnswer(prevState.currentProblem, newAnswer)
+        }))
     }
 
     buildAnswer = (prevAnswer, currAnswer) => {
@@ -224,7 +201,7 @@ class App extends Component {
 
     clearAnswer = () => {
         console.log("clearAnswer")
-        this.setState(state => ({
+        this.setState(() => ({
             currentAnswer: null,
             notification: null
         }))
@@ -232,11 +209,6 @@ class App extends Component {
 
     getBadge = () => {
         console.log("getBadge")
-
-        if (this.state.probSet.length === 0) {
-            return <img src={rock} className="Badge" alt="Correct" />
-        }
-
         let level = 0
         for (
             let index = this.state.history.length - 1;
@@ -321,8 +293,8 @@ class App extends Component {
                     </div>
                 ) : (
                     <div className="TheEnd">
-                        <div className="CongratsText">YOU ROCK!!!</div>
-                        <div className="RestartButtonDiv">
+                        <div className="CongratsText">GREAT JOB!!!</div>
+                        <div>
                             <button
                                 className="RestartButton"
                                 onClick={() =>
@@ -334,7 +306,7 @@ class App extends Component {
                         </div>
                     </div>
                 )}
-                <div className="Version">version {pjson.version}</div>
+                <div className="Version">version: 1.0.2</div>
             </div>
         )
     }
@@ -363,12 +335,13 @@ class Game extends React.Component {
     render() {
         return (
             <div className="ProbAll">
-                {this.props.currentProblem !== null ? (
+                {this.props.currentProblem !== null &&
+                typeof this.props.currentProblem !== "undefined" ? (
                     <div className="ProbSpace">
                         <div className="ProbNum">
                             {this.props.currentProblem !== null
                                 ? this.props.currentProblem.curr_a
-                                : 9}
+                                : 0}
                         </div>
                         <div className="ProbSymb">
                             {this.getSymbol(this.props.currentProblem.curr_c)}
@@ -376,7 +349,7 @@ class Game extends React.Component {
                         <div className="ProbNum">
                             {this.props.currentProblem !== null
                                 ? this.props.currentProblem.curr_b
-                                : 9}
+                                : 0}
                         </div>
                         <div className="ProbSymb">
                             <img
@@ -393,38 +366,6 @@ class Game extends React.Component {
                     </div>
                 ) : null}
             </div>
-            // <div className="ProbAll">
-            //     {this.props.currentProblem !== null &&
-            //     typeof this.props.currentProblem !== "undefined" ? (
-            //         <div className="ProbSpace">
-            //             <div className="ProbNum">
-            //                 {this.props.currentProblem !== null
-            //                     ? this.props.currentProblem.curr_a
-            //                     : 0}
-            //             </div>
-            //             <div className="ProbSymb">
-            //                 {this.getSymbol(this.props.currentProblem.curr_c)}
-            //             </div>
-            //             <div className="ProbNum">
-            //                 {this.props.currentProblem !== null
-            //                     ? this.props.currentProblem.curr_b
-            //                     : 0}
-            //             </div>
-            //             <div className="ProbSymb">
-            //                 <img
-            //                     src={equal}
-            //                     className="ProbSymb"
-            //                     alt="Correct"
-            //                 />
-            //             </div>
-            //             <div className="ProbNum">
-            //                 {this.props.currentAnswer !== null
-            //                     ? this.props.currentAnswer
-            //                     : this.props.getInitialAnswer()}
-            //             </div>
-            //         </div>
-            //     ) : null}
-            // </div>
         )
     }
 
