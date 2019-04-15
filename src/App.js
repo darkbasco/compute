@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+import React, {Component} from "react"
 import armsup from "./comp_armsup.png"
 import baby from "./comp_baby.png"
 import barbell from "./comp_barbell.png"
@@ -8,7 +8,8 @@ import hulk from "./comp_hulk.png"
 import thumbsup from "./comp_thumbsup.png"
 import oldguy from "./comp_oldguy.png"
 import deadlift from "./comp_deadlift.png"
-import geek from "./comp_geek.png"
+// import geek from "./comp_geek.png"
+import weak from "./too-weak-2.png"
 import rock from "./comp_rock2.png"
 import dumbellsilver from "./dumbell_silver.png"
 import plus from "./sign_plus.png"
@@ -20,9 +21,8 @@ import "./App.css"
 const pjson = require("../package.json")
 
 // const first = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-// const second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-let first = [0, 1, 2, 3, 4, 5, 6, 7]
-let second = [0, 1, 2, 3, 4, 5, 6, 7]
+const first = [6, 7, 8]
+const second = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 let operations = ["plus", "minus", "mult", "divi"]
 let waitTime = 7000
 
@@ -61,7 +61,7 @@ class App extends Component {
                     return acc_b.concat(
                         third.reduce((acc_c, curr_c) => {
                             if (curr_c === "plus") {
-                                return acc_c.concat({ curr_a, curr_b, curr_c })
+                                return acc_c.concat({curr_a, curr_b, curr_c})
                             } else if (curr_c === "minus") {
                                 if (curr_b <= curr_a) {
                                     return acc_c.concat({
@@ -73,7 +73,7 @@ class App extends Component {
                                     return acc_c
                                 }
                             } else if (curr_c === "mult") {
-                                return acc_c.concat({ curr_a, curr_b, curr_c })
+                                return acc_c.concat({curr_a, curr_b, curr_c})
                             } else if (curr_c === "divi") {
                                 if (
                                     curr_b <= curr_a &&
@@ -266,7 +266,7 @@ class App extends Component {
         } else if (level > 10) {
             return <img src={barbell} className="Badge" alt="Correct" />
         } else if (level > 5) {
-            return <img src={geek} className="Badge" alt="Correct" />
+            return <img src={weak} className="Badge" alt="Correct" />
         } else if (level > 2) {
             return <img src={oldguy} className="Badge" alt="Correct" />
         } else {
