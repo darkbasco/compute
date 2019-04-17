@@ -61,19 +61,42 @@ class App extends Component {
                     return acc_b.concat(
                         third.reduce((acc_c, curr_c) => {
                             if (curr_c === "plus") {
-                                return acc_c.concat({curr_a, curr_b, curr_c})
+                                return acc_c.concat({
+                                    curr_a,
+                                    curr_b,
+                                    curr_c,
+                                    answer: this.getAnswer(
+                                        curr_a,
+                                        curr_b,
+                                        curr_c
+                                    )
+                                })
                             } else if (curr_c === "minus") {
                                 if (curr_b <= curr_a) {
                                     return acc_c.concat({
                                         curr_a,
                                         curr_b,
-                                        curr_c
+                                        curr_c,
+                                        answer: this.getAnswer(
+                                            curr_a,
+                                            curr_b,
+                                            curr_c
+                                        )
                                     })
                                 } else {
                                     return acc_c
                                 }
                             } else if (curr_c === "mult") {
-                                return acc_c.concat({curr_a, curr_b, curr_c})
+                                return acc_c.concat({
+                                    curr_a,
+                                    curr_b,
+                                    curr_c,
+                                    answer: this.getAnswer(
+                                        curr_a,
+                                        curr_b,
+                                        curr_c
+                                    )
+                                })
                             } else if (curr_c === "divi") {
                                 if (
                                     curr_b <= curr_a &&
@@ -83,7 +106,12 @@ class App extends Component {
                                     return acc_c.concat({
                                         curr_a,
                                         curr_b,
-                                        curr_c
+                                        curr_c,
+                                        answer: this.getAnswer(
+                                            curr_a,
+                                            curr_b,
+                                            curr_c
+                                        )
                                     })
                                 } else {
                                     return acc_c
@@ -98,6 +126,12 @@ class App extends Component {
         }, [])
 
     getInitialAnswer = () => "?"
+
+    showAnswer = x => {
+        this.setState(prevState => {
+            return {currentAnswer: x}
+        })
+    }
 
     shuffleCurrentProblem = answeredPrevious => {
         this.setState(prevState => {
@@ -124,29 +158,15 @@ class App extends Component {
                         answeredPrevious
                     )
                 ]
-                // history:
-                //     prevState.currentProblem !== null
-                //         ? [
-                //               ...prevState.history,
-                //               new Problem(
-                //                   prevState.currentProblem,
-                //                   prevState.currentAnswer,
-                //                   answeredPrevious
-                //               )
-                //           ]
-                //         : [...prevState.history]
             }
         })
     }
 
     removeCurrentProblem = () => {
         this.setState(prevState => {
-            // let filteredArray
-            // if (prevState.currentIndex) {
             const filteredArray = prevState.probSet.filter(
                 item => item !== prevState.currentProblem
             )
-            // }
 
             return {
                 probSet: filteredArray ? filteredArray : prevState.probSet
@@ -158,8 +178,13 @@ class App extends Component {
         console.log("STARTING TIMER")
         setTimeout(() => {
             if (prob === this.state.currentProblem) {
-                console.log("TIMES UP")
-                this.shuffleCurrentProblem(false)
+                console.log("SHOW ANSWER", prob)
+                this.showAnswer(`(${prob.answer})`)
+
+                setTimeout(() => {
+                    console.log("SHUFFLE")
+                    this.shuffleCurrentProblem(false)
+                }, 2000)
             }
         }, waitTime)
     }
@@ -167,13 +192,10 @@ class App extends Component {
     updateAnswer = answer => {
         this.setState(prevState => {
             const newAnswer = this.buildAnswer(prevState.currentAnswer, answer)
-
+            console.log("UPDATE", prevState.currentProblem, newAnswer)
             return {
                 currentAnswer: newAnswer,
-                notification: this.checkAnswer(
-                    prevState.currentProblem,
-                    newAnswer
-                )
+                notification: prevState.currentProblem.answer === newAnswer
             }
         })
     }
@@ -187,33 +209,23 @@ class App extends Component {
         }
     }
 
-    checkAnswer = (problem, answer) => {
-        console.log("checkAnswer", problem, answer)
-        if (
-            problem.curr_c === "plus" &&
-            problem.curr_a + problem.curr_b === answer
-        ) {
-            this.removeCurrentProblem()
-            this.shuffleCurrentProblem(true)
-            return true
-        } else if (
-            problem.curr_c === "minus" &&
-            problem.curr_a - problem.curr_b === answer
-        ) {
-            this.removeCurrentProblem()
-            this.shuffleCurrentProblem(true)
-            return true
-        } else if (
-            problem.curr_c === "mult" &&
-            problem.curr_a * problem.curr_b === answer
-        ) {
-            this.removeCurrentProblem()
-            this.shuffleCurrentProblem(true)
-            return true
-        } else if (
-            problem.curr_c === "divi" &&
-            problem.curr_a / problem.curr_b === answer
-        ) {
+    getAnswer = (a, b, c) => {
+        if (c === "plus") {
+            return a + b
+        } else if (c === "minus") {
+            return a - b
+        } else if (c === "mult") {
+            return a * b
+        } else if (c === "divi") {
+            return a / b
+        } else {
+            throw new Error(`Can't compute answer: ${a}, ${b}, ${c}`)
+        }
+    }
+
+    checkAnswer = (answer, correctAnswer) => {
+        console.log("checkAnswer", answer, correctAnswer)
+        if (correctAnswer === answer) {
             this.removeCurrentProblem()
             this.shuffleCurrentProblem(true)
             return true
@@ -393,38 +405,6 @@ class Game extends React.Component {
                     </div>
                 ) : null}
             </div>
-            // <div className="ProbAll">
-            //     {this.props.currentProblem !== null &&
-            //     typeof this.props.currentProblem !== "undefined" ? (
-            //         <div className="ProbSpace">
-            //             <div className="ProbNum">
-            //                 {this.props.currentProblem !== null
-            //                     ? this.props.currentProblem.curr_a
-            //                     : 0}
-            //             </div>
-            //             <div className="ProbSymb">
-            //                 {this.getSymbol(this.props.currentProblem.curr_c)}
-            //             </div>
-            //             <div className="ProbNum">
-            //                 {this.props.currentProblem !== null
-            //                     ? this.props.currentProblem.curr_b
-            //                     : 0}
-            //             </div>
-            //             <div className="ProbSymb">
-            //                 <img
-            //                     src={equal}
-            //                     className="ProbSymb"
-            //                     alt="Correct"
-            //                 />
-            //             </div>
-            //             <div className="ProbNum">
-            //                 {this.props.currentAnswer !== null
-            //                     ? this.props.currentAnswer
-            //                     : this.props.getInitialAnswer()}
-            //             </div>
-            //         </div>
-            //     ) : null}
-            // </div>
         )
     }
 
